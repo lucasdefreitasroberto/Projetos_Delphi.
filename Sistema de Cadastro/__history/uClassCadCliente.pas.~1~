@@ -1,0 +1,48 @@
+unit uClassCadCliente;
+
+interface
+
+uses
+  Data.DB;
+
+type
+  TClassCadCliente = class
+    class function sqldsCadastroCliente: string;
+    class procedure ConfigurarCampos(Fields: TFields);
+  end;
+
+implementation
+
+{ TClassCadCliente }
+
+class procedure TClassCadCliente.ConfigurarCampos(Fields: TFields);
+var
+  I: Integer;
+begin
+  for I := 0 to Fields.Count - 1 do                                                         // * Precisa Usar -1 porque
+  begin                                                                                    // *Precisei Usar DisplayLabel porque ele Permite ler(read) e escrever(write)
+    if      Fields[I].FieldName = 'CODIGO_CLIENTE' then                                         // o DisplayName so consegue ler(read)
+            Fields[I].DisplayLabel := 'Código'
+
+    else if Fields[I].FieldName = 'NOME_CLIENTE' then
+            Fields[I].DisplayLabel := 'Nome'
+
+    else if Fields[I].FieldName = 'STATUS_CLIENTE' then
+            Fields[I].DisplayLabel := 'Status'
+  end;
+
+end;
+
+class function TClassCadCliente.sqldsCadastroCliente: string;                             // Criando as SQL de cadastro pela unit para seta no sqlds usando Class;
+
+begin
+  Result := '    select CODIGO_CLIENTE,'    + #13 +
+            '    NOME_CLIENTE,         '    + #13 +
+            '    STATUS_CLIENTE,        '   + #13 +
+            '    IMAGEM_CLIENTE       '     + #13 +
+            '    from CLIENTE '             + #13 +
+            '    Where CLIENTE.CODIGO_CLIENTE = :CODIGO';
+
+end;
+
+end.
