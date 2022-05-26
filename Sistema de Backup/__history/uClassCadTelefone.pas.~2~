@@ -1,0 +1,46 @@
+unit uClassCadTelefone;
+
+interface
+
+uses Data.DB;
+
+type
+  TClassCadTelefone = class
+    class function sqldsCadastroTelefone: string;
+    class procedure ConfigurarCampos(Fields: TFields);
+  end;
+
+implementation
+
+{ TClassCadEndereco }
+
+class procedure TClassCadTelefone.ConfigurarCampos(Fields: TFields);
+var
+  I: Integer;
+begin
+  for I := 0 to Fields.Count - 1 do
+  begin
+    if      Fields[I].FieldName = 'CODIGO_TELEFONE' then
+            Fields[I].DisplayLabel := 'Código'
+
+    else if Fields[I].FieldName = 'NUMERO_TELEFONE' then
+            Fields[I].DisplayLabel := 'Número Telefone'
+
+    else if Fields[I].FieldName = 'TIPO_TELEFONE' then
+            Fields[I].DisplayLabel := 'Tipo Telefone'
+
+    else if Fields[I].FieldName = 'ID_TELEFONE_CLIENTE' then
+            Fields[I].DisplayLabel := 'Código Cliente'
+
+  end;
+
+end;
+
+class function TClassCadTelefone.sqldsCadastroTelefone: string;
+begin
+  Result := '  select TELEFONE.CODIGO_TELEFONE, TELEFONE.NUMERO_TELEFONE, TELEFONE.TIPO_TELEFONE, TELEFONE.ID_TELEFONE_CLIENTE  ' DSLinkTelefone
+    '    from TELEFONE ' +#13+
+    '    Where TELEFONE.ID_TELEFONE_CLIENTE =:CODIGO';
+end;
+
+end.
